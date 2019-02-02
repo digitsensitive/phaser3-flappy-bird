@@ -1,0 +1,13 @@
+body {
+  font-size: 10px;
+  color: black;
+  background-color: #ffffff;
+}
+body div.container {
+  text-align: center;
+}
+body div.container div#game {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}

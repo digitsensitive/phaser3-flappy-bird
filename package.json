@@ -1,0 +1,45 @@
+{
+  "name": "phaser3-flappy-bird",
+  "version": "1.0.0",
+  "description": "",
+  "keywords": [
+    "Phaser",
+    "Phaser 3",
+    "Phaser3",
+    "Html5-game",
+    "TypeScript",
+    "Tutorials",
+    "Phaser-tutorial",
+    "Phaser-game",
+    "Phaser-framework",
+    "Phaser3-example"
+  ],
+  "devDependencies": {
+    "expose-loader": "0.7.5",
+    "ts-loader": "5.3.3",
+    "typescript": "3.2.4",
+    "webpack": "4.29.0",
+    "webpack-cli": "3.2.1",
+    "webpack-dev-server": "3.1.14"
+  },
+  "dependencies": {
+    "phaser": "3.15.1"
+  },
+  "scripts": {
+    "dev": "webpack --mode development && webpack-dev-server --mode development",
+    "build": "webpack --mode production && webpack-dev-server --mode production"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/digitsensitive/phaser3-flappy-bird.git"
+  },
+  "author": {
+    "name": "digitsensitive",
+    "email": "digit.sensitivee@gmail.com"
+  },
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/digitsensitive/phaser3-flappy-bird/issues"
+  },
+  "homepage": "https://github.com/digitsensitive/phaser3-flappy-bird#readme"
+}
