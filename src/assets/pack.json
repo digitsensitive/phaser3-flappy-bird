@@ -1,26 +1,26 @@
 {
-  "preload": {
+  "flappyBirdPack": {
     "files": [
       {
         "type": "bitmapFont",
-        "key": "flappyBirdFont",
-        "textureURL": "src/assets/font/font.png",
-        "fontDataURL": "src/assets/font/font.fnt"
+        "key": "font",
+        "textureURL": "./src/assets/font/font.png",
+        "fontDataURL": "./src/assets/font/font.fnt"
       },
       {
         "type": "image",
         "key": "background",
-        "url": "src/assets/other/bg.png"
+        "url": "./src/assets/images/bg.png"
       },
       {
         "type": "image",
         "key": "bird",
-        "url": "src/assets/sprites/bird.png"
+        "url": "./src/assets/images/bird.png"
       },
       {
         "type": "spritesheet",
         "key": "pipe",
-        "url": "src/assets/sprites/pipe.png",
+        "url": "./src/assets/images/pipe.png",
         "frameConfig": {
           "frameWidth": 20,
           "frameHeight": 20

@@ -1,6 +1,6 @@
 /**
  * @author       Digitsensitive <digit.sensitivee@gmail.com>
- * @copyright    2018 Digitsensitive
+ * @copyright    2019 Digitsensitive
  * @description  Flappy Bird: Game Scene
  * @license      Digitsensitive
  */
@@ -9,15 +9,11 @@ import { Bird } from "../objects/bird";
 import { Pipe } from "../objects/pipe";
 
 export class GameScene extends Phaser.Scene {
-  // objects
+  // game objects
   private bird: Bird;
   private pipes: Phaser.GameObjects.Group;
-  private bg: Phaser.GameObjects.TileSprite;
-
-  // variables
-  private timer: Phaser.Time.TimerEvent;
-  private score: number;
-  private scoreText: Phaser.GameObjects.Text[];
+  private background: Phaser.GameObjects.TileSprite;
+  private scoreText: Phaser.GameObjects.BitmapText;
 
   constructor() {
     super({
@@ -26,45 +22,34 @@ export class GameScene extends Phaser.Scene {
   }
 
   preload(): void {
-    this.cameras.main.setBackgroundColor(0x98d687);
-    this.load.pack("preload", "./src/assets/pack.json", "preload");
+    this.load.pack(
+      "flappyBirdPack",
+      "./src/assets/pack.json",
+      "flappyBirdPack"
+    );
   }
 
   init(): void {
-    // objects
-    this.bird = null;
-    this.pipes = this.add.group({ classType: Pipe });
-    this.bg = null;
-
-    // variables
-    this.timer = undefined;
-    this.score = -1;
-    this.scoreText = [];
+    this.registry.set("score", -1);
   }
 
   create(): void {
-    this.bg = this.add.tileSprite(0, 0, 135, 200, "background");
-    this.bg.setScale(6);
+    // *****************************************************************
+    // GAME OBJECTS
+    // *****************************************************************
+    this.background = this.add.tileSprite(0, 0, 390, 600, "background");
+    this.background.setOrigin(0, 0);
 
-    this.scoreText.push(
-      this.add.text(this.sys.canvas.width / 2 - 14, 30, "0", {
-        fontFamily: "Connection",
-        fontSize: "40px",
-        fill: "#000"
-      })
-    );
-    this.scoreText.push(
-      this.add.text(this.sys.canvas.width / 2 - 16, 30, "0", {
-        fontFamily: "Connection",
-        fontSize: "40px",
-        fill: "#fff"
-      })
-    );
+    this.scoreText = this.add
+      .bitmapText(
+        this.sys.canvas.width / 2 - 14,
+        30,
+        "font",
+        this.registry.get("score")
+      )
+      .setDepth(2);
 
-    this.scoreText[0].setDepth(2);
-    this.scoreText[1].setDepth(3);
-
-    this.addRowOfPipes();
+    this.pipes = this.add.group({ classType: Pipe });
 
     this.bird = new Bird({
       scene: this,
@@ -73,7 +58,12 @@ export class GameScene extends Phaser.Scene {
       key: "bird"
     });
 
-    this.timer = this.time.addEvent({
+    this.addRowOfPipes();
+
+    // *****************************************************************
+    // TIMER
+    // *****************************************************************
+    this.time.addEvent({
       delay: 1500,
       callback: this.addRowOfPipes,
       callbackScope: this,
@@ -83,9 +73,17 @@ export class GameScene extends Phaser.Scene {
 
   update(): void {
     if (!this.bird.getDead()) {
-      this.bg.tilePositionX -= 1;
+      this.background.tilePositionX += 4;
       this.bird.update();
-      this.physics.overlap(this.bird, this.pipes, this.hitPipe, null, this);
+      this.physics.overlap(
+        this.bird,
+        this.pipes,
+        function() {
+          this.bird.setDead(true);
+        },
+        null,
+        this
+      );
     } else {
       Phaser.Actions.Call(
         this.pipes.getChildren(),
@@ -96,7 +94,7 @@ export class GameScene extends Phaser.Scene {
       );
 
       if (this.bird.y > this.sys.canvas.height) {
-        this.restartGame();
+        this.scene.restart();
       }
     }
   }
@@ -117,9 +115,8 @@ export class GameScene extends Phaser.Scene {
 
   private addRowOfPipes(): void {
     // update the score
-    this.score += 1;
-    this.scoreText[0].setText("" + this.score);
-    this.scoreText[1].setText("" + this.score);
+    this.registry.values.score += 1;
+    this.scoreText.setText("" + this.registry.get("score"));
 
     // randomly pick a number between 1 and 5
     let hole = Math.floor(Math.random() * 5) + 1;
@@ -136,13 +133,5 @@ export class GameScene extends Phaser.Scene {
         }
       }
     }
-  }
-
-  private hitPipe() {
-    this.bird.setDead(true);
-  }
-
-  private restartGame(): void {
-    this.scene.start("MainMenuScene");
   }
 }

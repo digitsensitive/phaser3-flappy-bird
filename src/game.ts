@@ -5,16 +5,11 @@
  * @license      Digitsensitive
  */
 
-/// <reference path="./phaser.d.ts"/>
-
 import "phaser";
 import { GameScene } from "./scenes/game-scene";
 
 const config: GameConfig = {
-  title: "Flappy Bird",
-  url: "https://github.com/digitsensitive/phaser3-typescript",
-  version: "1.0",
-  width: 405,
+  width: 390,
   height: 600,
   zoom: 1,
   type: Phaser.AUTO,
