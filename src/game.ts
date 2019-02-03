@@ -1,6 +1,6 @@
 /**
  * @author       Digitsensitive <digit.sensitivee@gmail.com>
- * @copyright    2018 Digitsensitive
+ * @copyright    2019 Digitsensitive
  * @description  Flappy Bird: Game
  * @license      Digitsensitive
  */
@@ -11,8 +11,6 @@ import { GameScene } from "./scenes/game-scene";
 const config: GameConfig = {
   width: 390,
   height: 600,
-  zoom: 1,
-  type: Phaser.AUTO,
   parent: "game",
   scene: [GameScene],
   input: {
@@ -21,12 +19,10 @@ const config: GameConfig = {
   physics: {
     default: "arcade",
     arcade: {
-      gravity: { y: 300 },
-      debug: false
+      gravity: { y: 300 }
     }
   },
-  backgroundColor: "#98d687",
-  render: { pixelArt: true, antialias: false, autoResize: false }
+  render: { pixelArt: true }
 };
 
 export class Game extends Phaser.Game {
