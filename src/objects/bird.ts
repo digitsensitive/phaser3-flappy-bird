@@ -7,8 +7,8 @@
 
 export class Bird extends Phaser.GameObjects.Sprite {
   private jumpKey: Phaser.Input.Keyboard.Key;
-  private isDead: boolean = false;
-  private isFlapping: boolean = false;
+  private isDead: boolean;
+  private isFlapping: boolean;
 
   public getDead(): boolean {
     return this.isDead;
@@ -24,6 +24,10 @@ export class Bird extends Phaser.GameObjects.Sprite {
     // sprite
     this.setScale(3);
     this.setOrigin(0, 0);
+
+    // variables
+    this.isDead = false;
+    this.isFlapping = false;
 
     // physics
     this.scene.physics.world.enable(this);
